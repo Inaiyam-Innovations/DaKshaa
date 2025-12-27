@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../../supabase';
 import { motion } from 'framer-motion';
 import { User, Mail, Lock, Phone, School, BookOpen, GraduationCap, ChevronRight, Loader2 } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SignUpForm = () => {
   const navigate = useNavigate();
@@ -32,13 +33,35 @@ const SignUpForm = () => {
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#ef4444',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '10px',
+          fontSize: '16px',
+          fontWeight: '600',
+        },
+      });
       setLoading(false);
       return;
     }
 
     if (formData.mobileNumber.length !== 10) {
-      setError("Mobile number must be 10 digits");
+      toast.error("Mobile number must be 10 digits", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#ef4444',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '10px',
+          fontSize: '16px',
+          fontWeight: '600',
+        },
+      });
       setLoading(false);
       return;
     }
@@ -65,11 +88,55 @@ const SignUpForm = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        alert("Account created successfully! Redirecting to home page...");
-        navigate('/');
+        // Send welcome email
+        try {
+          await fetch('http://localhost:3000/send-welcome-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              fullName: formData.fullName
+            })
+          });
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError);
+          // Don't block registration if email fails
+        }
+
+        toast.success('Account created successfully! Check your email', {
+          duration: 4000,
+          position: 'top-center',
+          style: {
+            background: 'linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%)',
+            color: '#fff',
+            padding: '16px',
+            borderRadius: '10px',
+            fontSize: '16px',
+            fontWeight: '600',
+            boxShadow: '0 10px 40px rgba(14, 165, 233, 0.3)',
+          },
+          icon: '🎉',
+        });
+        
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       }
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message || 'Registration failed', {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#ef4444',
+          color: '#fff',
+          padding: '16px',
+          borderRadius: '10px',
+          fontSize: '16px',
+          fontWeight: '600',
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -81,6 +148,7 @@ const SignUpForm = () => {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-2xl mx-auto bg-gray-800/50 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-2xl"
     >
+
       <h2 className="text-3xl font-bold text-white mb-8 font-orbitron text-center">Create Your DaKshaa Account</h2>
       
       <form onSubmit={handleSignUp} className="space-y-8">

@@ -11,7 +11,7 @@ const HackathonSection = () => {
   // Example data as an array of objects
   const eventDetails = {
     id: "hackathon-event-1",
-    title: "Neura-Hack 2025 By",
+    title: "Neura-Hack 2026 By",
     descriptions: [
      
     ],
@@ -48,7 +48,7 @@ const HackathonSection = () => {
     schedule: [
       {
         round: "Venue",
-        date: "March 28, 2025",
+        date: "March 28, 2026",
         time: "10:00 AM",
         location: "IT-Lab 1, IT Park",
       },
@@ -401,3 +401,4 @@ const HackathonSection = () => {
 };
 
 export default HackathonSection;
+

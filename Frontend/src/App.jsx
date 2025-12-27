@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Toaster } from 'react-hot-toast';
 import Events from "./Pages/Events/Events";
 import Home from "./Pages/Home/Home";
 import "./App.css";
@@ -120,7 +121,14 @@ function AppContent() {
           <Route path="/signup" element={<Register />} />
           <Route path="/register-events" element={<EventRegistration />} />
           <Route path="/scan" element={<Scan />} />
-          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route 
+            path="/dashboard/*" 
+            element={
+              <ProtectedRoute allowedRoles={["student", "super_admin", "registration_admin", "event_coordinator", "volunteer"]}>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/live-status" element={<LiveStatusBoard />} />
           <Route path="/live-stats" element={<LiveStats />} />
@@ -325,6 +333,15 @@ function App() {
 
   return (
     <>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            zIndex: 99999,
+          },
+        }}
+      />
       <AnimatePresence mode="wait">
         {isLoading && (
           <motion.div

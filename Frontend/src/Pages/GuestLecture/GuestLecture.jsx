@@ -31,7 +31,7 @@ const GuestLecture = () => {
     {
       lectures: [
         {
-          name: "National Conference on Advancements in Semiconductor Technologies, Intelligent systems and Power Engineering (ASTIPE 2025)",
+          name: "National Conference on Advancements in Semiconductor Technologies, Intelligent systems and Power Engineering (ASTIPE 2026)",
           image: els,
         },
       ],
@@ -234,3 +234,4 @@ const GuestLecture = () => {
 };
 
 export default GuestLecture;
+

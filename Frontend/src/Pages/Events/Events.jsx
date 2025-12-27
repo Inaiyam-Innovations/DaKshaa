@@ -650,7 +650,7 @@ const Events = () => {
                     }}
                   />
                   <div className="relative z-10 text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-[0.3em] mt-1">
-                    2025
+                    2026
                   </div>
 
                   {/* Scanning Line */}
@@ -785,3 +785,4 @@ const Events = () => {
 };
 
 export default Events;
+

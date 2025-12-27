@@ -115,7 +115,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "CSE lab 1,IT Park",
         },
@@ -147,7 +147,7 @@ const EventDetails = () => {
     "technical-event-2": {
       title: "Neura Hack (Hackathon)",
       description:
-        "Neura Hack 2025 is a 36-hour innovation marathon where brilliant minds unite to tackle pressing global challenges aligned with the UN Sustainable Development Goals (SDGs). Participants will collaborate, ideate, and build cutting-edge solutions leveraging technology to address issues like climate action, equality, health, and more. Join us to code, create, and catalyze change for a sustainable future!",
+        "Neura Hack 2026 is a 36-hour innovation marathon where brilliant minds unite to tackle pressing global challenges aligned with the UN Sustainable Development Goals (SDGs). Participants will collaborate, ideate, and build cutting-edge solutions leveraging technology to address issues like climate action, equality, health, and more. Join us to code, create, and catalyze change for a sustainable future!",
       image: Tech2,
       rounds: [
         {
@@ -180,7 +180,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "CSE lab 1,IT Park",
         },
@@ -255,7 +255,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 3:00 PM",
           location: "Announced Soon!",
         },
@@ -313,7 +313,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "11:00 AM to 1:30 PM",
           location: "MC 207,Mechatronics Block",
         },
@@ -369,13 +369,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 1:30 PM",
           location: "Academic Block Lab 2",
         },
         {
           round: "Round 2",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "1:30 PM to 4:00 PM",
           location: "Academic Block Lab 2",
         },
@@ -435,13 +435,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 11:00 AM",
           location: "Announced Soon!",
         },
         {
           round: "Round 2",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "1:00 PM to 3:00 PM",
           location: "Announced Soon!",
         },
@@ -494,7 +494,7 @@ const EventDetails = () => {
     //   schedule: [
     //     {
     //       round: "Round",
-    //       date: "May 22, 2025",
+    //       date: "May 22, 2026",
     //       time: "9:00 AM to 11:00 AM",
     //       location: "Tech Hub, Innovation Center",
     //     },
@@ -553,13 +553,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 11:00 AM",
           location: "Design Center,Mechanical Block",
         },
         {
           round: "Round 2",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "1:00 PM to 3:00 PM",
           location: "Design Center,Mechanical Block",
         },
@@ -615,7 +615,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:30 AM",
           location: "Announced Soon!",
         },
@@ -664,13 +664,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 11:00 AM",
           location: "Announced Soon!",
         },
         {
           round: "Round 2",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "1:00 PM to 3:00 PM",
           location: "Announced Soon!",
         },
@@ -715,7 +715,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:30AM -10:30AM",
           location: "Fabric manufacturing laboratory,TEXTILE BLOCK",
         },
@@ -807,7 +807,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Venue",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:30AM -10:30AM",
           location: "announcing soon",
         },
@@ -853,7 +853,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Venue",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:30AM -10:30AM",
           location: "announcing soon",
         },
@@ -959,7 +959,7 @@ const EventDetails = () => {
         schedule: [
           {
             round: "Venue",
-            date: "March 28, 2025",
+            date: "March 28, 2026",
             time: "9:30AM -10:30AM",
             location: "announcing soon",
           },
@@ -1019,7 +1019,7 @@ const EventDetails = () => {
         schedule: [
           {
             round: "Venue",
-            date: "March 28, 2025",
+            date: "March 28, 2026",
             time: "9:30AM -10:30AM",
             location: "announcing soon",
           },
@@ -1076,7 +1076,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "IT Park",
         },
@@ -1127,13 +1127,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "11:00 AM to 12:00 PM",
           location: "EEE 305,EEE 306 ,EEE Block",
         },
         {
           round: "Round 2",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "1:30 PM to 3:00 PM",
           location: "EEE 305,EEE 306 ,EEE Block",
         },
@@ -1198,19 +1198,19 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "Art Gallery, Creative Center",
         },
         {
           round: "Round 2",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 4:00 PM",
           location: "Art Gallery, Creative Center",
         },
         {
           round: "Round 3",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "2:00 PM to 4:00 PM",
           location: "Art Gallery, Creative Center",
         },
@@ -1274,13 +1274,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "Art Gallery, Creative Center",
         },
         {
           round: "Round 2",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 4:00 PM",
           location: "Art Gallery, Creative Center",
         },
@@ -1331,7 +1331,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "HPC LAB,Mechatronics Block",
         },
@@ -1378,13 +1378,13 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Slot1",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "AB(211),AB Block",
         },
         {
           round: "Slot2",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "1:00 PM to 4:00 PM",
           location: "AB(211),AB Block",
         },
@@ -1450,19 +1450,19 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round 1",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 12:00 PM",
           location: "Art Gallery, Creative Center",
         },
         {
           round: "Round 2",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 4:00 PM",
           location: "Art Gallery, Creative Center",
         },
         {
           round: "Round 3",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 4:00 PM",
           location: "Art Gallery, Creative Center",
         },
@@ -1513,7 +1513,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "9:00 AM to 12:30 PM",
           location: "Mechanical Block",
         },
@@ -1557,7 +1557,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "venue",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "9:30 PM to 12:00 PM",
           location: "IT lab 2,IT Park ",
         },
@@ -1631,7 +1631,7 @@ const EventDetails = () => {
       registrationLink: "https://forms.gle/F7ToBuAQk8jMRJe5A", // Registration link
     },
     "non-technical-event-12": {
-      title: "Waste to Wealth 2025",
+      title: "Waste to Wealth 2026",
       description:
         "This event invites Engineering and Polytechnic students to showcase innovative solutions by transforming waste into creative, functional, or technological models. Participants will present their projects in a 5-7 minute pitch, focusing on creativity, sustainability, and practicality. The competition enhances problem-solving, entrepreneurial skills, and environmental awareness, offering career and networking opportunities in sustainability.",
       image: NonTech11,
@@ -1700,7 +1700,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -1745,7 +1745,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 3:00 PM",
           location: "KSRCT",
         },
@@ -1787,7 +1787,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 3:00 PM",
           location: "KSRCT",
         },
@@ -1839,7 +1839,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 03:00 PM",
           // location: "AI Lab, Mechatronics Block",
         },
@@ -1905,7 +1905,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 03:00 PM",
           location: "KSRCT",
         },
@@ -1946,7 +1946,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "10:00 AM to 03:00 PM",
           location: "KSRCT",
         },
@@ -1994,7 +1994,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round  ",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2036,7 +2036,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Venue ",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 PM to 3:00 PM",
           location: "IT lab 1,IT Park ",
         },
@@ -2072,7 +2072,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Workshop timing",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "10:00 AM to 3:00 PM",
           location: "AI Lab, Mechatronics Block",
         },
@@ -2108,7 +2108,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2144,7 +2144,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Event Timing",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 4:00 PM",
           location: "AB 209, Academic Block",
         },
@@ -2181,7 +2181,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2217,7 +2217,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Venue",
-          date: "March 28 & 22, 2025",
+          date: "March 28 & 22, 2026",
           time: "9:00 AM to 4:00 PM",
           location: "Computer Lab,EEE Block ",
         },
@@ -2254,7 +2254,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "10:00 AM to 4:00 PM",
           location: "Bio tech smart class,BIOTECH Block ",
         },
@@ -2301,7 +2301,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 28 & 29, 2025",
+          date: "March 28 & 29, 2026",
           time: "9:00 AM to 4:00 PM",
           location:
             "Centre of Excellence in Drone Technology,Mechatronics Block ",
@@ -2339,7 +2339,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2375,7 +2375,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2417,7 +2417,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round",
-          date: "March 28, 2025",
+          date: "March 28, 2026",
           time: "9:00 AM to 3:00 PM",
           location: "Idea lab,Main Block",
         },
@@ -2454,7 +2454,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2491,7 +2491,7 @@ const EventDetails = () => {
       schedule: [
         {
           round: "Round ",
-          date: "March 29, 2025",
+          date: "March 29, 2026",
           time: "2:00 PM to 3:00 PM",
           location: "Textile chemical processing laboratory,Textile Block ",
         },
@@ -2916,3 +2916,4 @@ const EventDetails = () => {
 };
 
 export default EventDetails;
+

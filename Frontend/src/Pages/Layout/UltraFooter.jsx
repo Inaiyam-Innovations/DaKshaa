@@ -238,7 +238,7 @@ const UltraFooter = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p>© 2025 DaKshaa T26. All rights reserved.</p>
+          <p>© 2026 DaKshaa T26. All rights reserved.</p>
           
           <div className="flex items-center gap-2">
             <span>Made with</span>
@@ -279,3 +279,4 @@ const UltraFooter = () => {
 };
 
 export default UltraFooter;
+

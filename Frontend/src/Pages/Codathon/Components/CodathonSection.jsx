@@ -36,7 +36,7 @@ const CodathonSection = () => {
     schedule: [
       {
         round: "Event Timing",
-        date: "March 28, 2025",
+        date: "March 28, 2026",
 
         time: "9:30 AM",
         location: "To be announced",
@@ -355,3 +355,4 @@ const CodathonSection = () => {
 };
 
 export default CodathonSection;
+

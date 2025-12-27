@@ -14,10 +14,12 @@ import {
 } from "lucide-react";
 import { supabase } from "../../../supabase";
 import { supabaseService } from "../../../services/supabaseService";
+import CreateTeamModal from "./CreateTeamModal";
 
 const MyTeams = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchTeams();
@@ -37,6 +39,10 @@ const MyTeams = () => {
     }
   };
 
+  const handleTeamCreated = () => {
+    fetchTeams(); // Refresh teams list
+  };
+
   if (loading) {
     return (
       <div className="h-96 flex items-center justify-center">
@@ -52,11 +58,21 @@ const MyTeams = () => {
           <h2 className="text-2xl font-bold">My Teams</h2>
           <p className="text-gray-400 text-sm">Manage your event teams and invitations</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary-dark text-white font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2 px-6 py-3 bg-secondary hover:bg-secondary-dark text-white font-bold rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(249,115,22,0.3)]"
+        >
           <UserPlus size={20} />
           Create New Team
         </button>
       </div>
+
+      {/* Create Team Modal */}
+      <CreateTeamModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onTeamCreated={handleTeamCreated}
+      />
 
       <div className="grid grid-cols-1 gap-8">
         {teams.map((team) => (

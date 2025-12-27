@@ -114,7 +114,7 @@ function StartupSection() {
             <p className="bg-sky-900/70 p-6 clip-bottom-right text-justify">
               StartupTN, in collaboration with K.S. Rangasamy College of
               Technology, proudly presents the DaKshaa T26 Idea Elevator
-              Pitching Contest as part of Tamil Nadu Global Startup Summit 2025.
+              Pitching Contest as part of Tamil Nadu Global Startup Summit 2026.
               This prestigious event serves as a dynamic platform for aspiring
               students to showcase their groundbreaking ideas in a fast-paced
               and impactful setting. As a parallel session of the Global Startup
@@ -424,7 +424,7 @@ function StartupSection() {
           <div className="flex flex-col items-start mx-10 gap-7">
             <ul className="list-disc">
               <li className="text-lg md:text-xl text-primary">
-                StartupTN, in collaboration with K.S. Rangasamy College of Technology, proudly presents the Idea Elevator Pitching Contest as part of DaKshaa T26, a parallel session of the TN Global Startup Summit 2025, scheduled for May 3, 2025.
+                StartupTN, in collaboration with K.S. Rangasamy College of Technology, proudly presents the Idea Elevator Pitching Contest as part of DaKshaa T26, a parallel session of the TN Global Startup Summit 2026, scheduled for May 3, 2026.
               </li>
               <li className="text-lg md:text-xl text-primary">
                 This prestigious event serves as a dynamic platform for aspiring students to showcase their innovative ideas in a fast-paced and impactful setting. As a parallel session of the TN Global Startup Summit, the contest brings together visionary minds, industry leaders, and investors, fostering an environment of innovation, collaboration, and entrepreneurial excellence.
@@ -452,7 +452,7 @@ function StartupSection() {
               Venue and Timing
             </button>
             <div className="mt-2 p-3 border border-primary-dark bg-transparent text-gray-300">
-              <p className="text-base md:text-lg">Date: 28th March 2025</p>
+              <p className="text-base md:text-lg">Date: 28th March 2026</p>
               <p className="text-base md:text-lg">Time: 09:00 AM - 4:00 PM</p>
               <p className="text-base md:text-lg">
                 Location: Venue details will be shared in the
@@ -512,3 +512,4 @@ function StartupSection() {
 }
 
 export default StartupSection;
+

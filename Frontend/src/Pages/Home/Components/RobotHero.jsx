@@ -7,21 +7,17 @@ const CyrusNametag = ({ bone }) => {
   if (!bone) return null;
   return createPortal(
     <group position={[0, 0, 0]}>
-      {/* Debug Helper / Mounting Plate to ensure visibility */}
-      <mesh position={[0, 0.2, 0.3]} rotation={[Math.PI / 2, 0, 0]}>
-        <boxGeometry args={[0.8, 0.3, 0.05]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.8} />
-      </mesh>
-
-      {/* The Text */}
+      {/* The Text - removed white debug box */}
       <Text
-        position={[0, 0.2, 0.32]} // Slightly in front of the plate
-        rotation={[Math.PI / 2, Math.PI, 0]} // Adjusted rotation
+        position={[0, 0.2, 0.32]}
+        rotation={[Math.PI / 2, Math.PI, 0]}
         fontSize={0.2}
-        color="#f97316" // Orange for visibility
+        color="#f97316" // Orange text
         anchorX="center"
         anchorY="middle"
         characters="Cyrus"
+        outlineWidth={0.02}
+        outlineColor="#000000"
       >
         CYRUS
       </Text>
@@ -43,10 +39,14 @@ function Model(props) {
   useEffect(() => {
     // Force Robot Material Colors to Palette (removing any other colors)
     scene.traverse((child) => {
-      if (child.isMesh) {
-        // preserve the texture map if it exists, but reset the color filter to white
-        // This ensures the material is "neutral" and takes on the Orange/Blue lighting
-        child.material.color.set('white');
+      if (child.isMesh && child.material) {
+        // Handle array of materials or single material
+        const materials = Array.isArray(child.material) ? child.material : [child.material];
+        materials.forEach((material) => {
+          if (material.color) {
+            material.color.set('white');
+          }
+        });
 
         // Optional: Increase metalness/smoothness for a more "Cyber" look
         // child.material.metalness = 0.7; 
@@ -126,12 +126,17 @@ function Model(props) {
 
 
 const RobotHero = () => {
+  const [loadError, setLoadError] = useState(false);
+
   return (
     <div className="w-full h-[400px] xs:h-[500px] sm:h-[600px] md:h-[700px] relative z-20 cursor-grab active:cursor-grabbing">
       <Canvas
         camera={{ position: [0, 2, 10], fov: 35 }}
         gl={{ alpha: true, antialias: true }}
         dpr={[1, 2]}
+        onCreated={({ gl }) => {
+          gl.setClearColor(0x000000, 0); // Transparent background
+        }}
       >
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={2} color="cyan" />

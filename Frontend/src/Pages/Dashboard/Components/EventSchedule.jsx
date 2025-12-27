@@ -50,7 +50,7 @@ const EventSchedule = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h2 className="text-2xl font-bold">Event Schedule</h2>
-          <p className="text-gray-400 text-sm">Plan your journey through DaKshaa 2025</p>
+          <p className="text-gray-400 text-sm">Plan your journey through DaKshaa 2026</p>
         </div>
 
         <div className="flex items-center gap-2 p-1 bg-white/5 border border-white/10 rounded-2xl">
@@ -178,3 +178,4 @@ const EventSchedule = () => {
 };
 
 export default EventSchedule;
+

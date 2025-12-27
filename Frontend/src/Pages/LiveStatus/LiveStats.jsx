@@ -180,7 +180,7 @@ const LiveStats = () => {
           className="text-center mb-16"
         >
           <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent mb-4">
-            DAKSHAA 2025
+            DAKSHAA 2026
           </h1>
           <p className="text-2xl md:text-3xl text-gray-400 font-light tracking-wider">
             Live Statistics Dashboard
@@ -313,3 +313,4 @@ const LiveStats = () => {
 };
 
 export default LiveStats;
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, 
@@ -18,6 +18,7 @@ const MyRegistrations = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const qrRef = useRef(null);
 
   useEffect(() => {
     fetchRegistrations();
@@ -35,6 +36,78 @@ const MyRegistrations = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const downloadQRCode = () => {
+    if (!selectedTicket) return;
+    
+    // Create a larger canvas for the styled ticket
+    const downloadCanvas = document.createElement('canvas');
+    const ctx = downloadCanvas.getContext('2d');
+    const size = 800;
+    downloadCanvas.width = size;
+    downloadCanvas.height = size;
+
+    // White background with rounded corners effect
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, size, size);
+
+    // Add "Entry Pass" text at top
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Entry Pass', size / 2, 80);
+
+    // Add "DaKshaa 2026" text
+    ctx.font = '32px Arial';
+    ctx.fillStyle = '#666666';
+    ctx.fillText('DaKshaa 2026', size / 2, 130);
+
+    // Get the QR code canvas
+    const qrCanvas = qrRef.current?.querySelector('canvas');
+    if (!qrCanvas) {
+      console.error('Canvas not found');
+      return;
+    }
+
+    // Draw gray background for QR code area
+    const qrSize = 450;
+    const qrX = (size - qrSize) / 2;
+    const qrY = 180;
+    ctx.fillStyle = '#F3F4F6';
+    ctx.fillRect(qrX - 40, qrY - 40, qrSize + 80, qrSize + 80);
+
+    // Draw the QR code centered
+    ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+    // Add event title at bottom
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 28px Arial';
+    ctx.fillText(selectedTicket.events?.title || 'Event', size / 2, qrY + qrSize + 100);
+
+    // Add QR code string
+    ctx.font = '16px monospace';
+    ctx.fillStyle = '#999999';
+    const qrText = selectedTicket.qr_code_string;
+    const maxWidth = size - 100;
+    const words = qrText.match(/.{1,30}/g) || [qrText];
+    words.forEach((word, index) => {
+      ctx.fillText(word, size / 2, qrY + qrSize + 140 + (index * 25));
+    });
+
+    // Convert to blob and download
+    downloadCanvas.toBlob((blob) => {
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `DaKshaa-${selectedTicket.events?.title.replace(/\s+/g, '-')}-EntryPass.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+    }, 'image/png');
   };
 
   const getStatusColor = (status) => {
@@ -83,7 +156,7 @@ const MyRegistrations = () => {
               <div className="space-y-2 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <Calendar size={14} />
-                  <span>March 15-17, 2025</span>
+                  <span>March 15-17, 2026</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock size={14} />
@@ -123,10 +196,10 @@ const MyRegistrations = () => {
               
               <div className="mb-6">
                 <h2 className="text-2xl font-bold">Entry Pass</h2>
-                <p className="text-gray-500 text-sm">DaKshaa 2025</p>
+                <p className="text-gray-500 text-sm">DaKshaa 2026</p>
               </div>
 
-              <div className="bg-gray-100 p-6 rounded-2xl inline-block mb-6">
+              <div ref={qrRef} className="bg-gray-100 p-6 rounded-2xl inline-block mb-6">
                 <QRCodeCanvas 
                   value={selectedTicket.qr_code_string} 
                   size={200}
@@ -134,6 +207,14 @@ const MyRegistrations = () => {
                   includeMargin={true}
                 />
               </div>
+
+              <button
+                onClick={downloadQRCode}
+                className="w-full mb-4 py-3 bg-blue-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:bg-blue-700 transition-all"
+              >
+                <Download size={18} />
+                Download QR Code
+              </button>
 
               <div className="space-y-1">
                 <h3 className="font-bold text-xl">{selectedTicket.events?.title}</h3>
@@ -159,4 +240,5 @@ const MyRegistrations = () => {
 };
 
 export default MyRegistrations;
+
 

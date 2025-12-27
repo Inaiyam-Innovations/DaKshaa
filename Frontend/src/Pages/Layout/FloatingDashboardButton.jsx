@@ -8,11 +8,13 @@ const FloatingDashboardButton = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userRole, setUserRole] = useState('student');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const checkRole = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
+        setIsAuthenticated(true);
         const { data: profile } = await supabase
           .from('profiles')
           .select('role')
@@ -34,6 +36,14 @@ const FloatingDashboardButton = () => {
     return null;
   }
 
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else {
+      navigate(getDashboardPath());
+    }
+  };
+
   const getDashboardPath = () => {
     switch (userRole) {
       case 'super_admin': return '/admin';
@@ -48,7 +58,7 @@ const FloatingDashboardButton = () => {
 
   return (
     <motion.button
-      onClick={() => navigate(getDashboardPath())}
+      onClick={handleClick}
       className={`fixed bottom-24 right-6 z-50 hidden md:flex items-center justify-center w-14 h-14 bg-gradient-to-r ${isAdminRole ? 'from-red-600 to-orange-600' : 'from-purple-600 to-blue-600'} text-white rounded-full shadow-lg hover:shadow-purple-500/50 transition-shadow duration-300 lg:bottom-24 lg:right-8 group`}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}

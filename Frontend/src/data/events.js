@@ -82,7 +82,7 @@ export const EVENTS_DATA = [
   // Conference
   { 
     id: 'conf_tech', 
-    title: 'Tech Conference 2025', 
+    title: 'Tech Conference 2026', 
     category: 'conference', 
     image: '/assets/conference/main.jpg', 
     desc: 'Keynote speeches from industry leaders.' 
@@ -95,3 +95,4 @@ export const EVENTS_DATA = [
     desc: 'Discussing the future of education and technology.' 
   }
 ];
+

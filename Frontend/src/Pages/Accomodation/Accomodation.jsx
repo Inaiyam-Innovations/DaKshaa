@@ -1,8 +1,8 @@
 import React from 'react'
-import AccommodationDetails from './Components/AccomodationDetails'
+import AccommodationBooking from './Components/AccommodationBooking'
 function Accomodation() {
   return (
-    <AccommodationDetails/>
+    <AccommodationBooking/>
   )
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -11,7 +11,8 @@ import {
   Menu,
   X,
   LogOut,
-  ArrowLeft
+  ArrowLeft,
+  CalendarCheck
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../../supabase';
@@ -19,38 +20,58 @@ import { supabase } from '../../../supabase';
 const DashboardLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
         
-        setUserProfile(profile);
+        if (user) {
+          // Check sessionStorage first for faster load
+          const cachedProfile = sessionStorage.getItem('userProfile');
+          if (cachedProfile) {
+            setUserProfile(JSON.parse(cachedProfile));
+            setLoading(false);
+            return;
+          }
+
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('full_name, email, role')
+            .eq('id', user.id)
+            .single();
+          
+          if (profile) {
+            setUserProfile(profile);
+            sessionStorage.setItem('userProfile', JSON.stringify(profile));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUserProfile();
   }, []);
 
-  const menuItems = [
+  const menuItems = useMemo(() => [
     { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'My Registrations', icon: ClipboardList, path: '/dashboard/registrations' },
     { label: 'My Teams', icon: Users, path: '/dashboard/teams' },
     { label: 'Attendance QR', icon: QrCode, path: '/dashboard/qr' },
+    { label: 'Bookings', icon: CalendarCheck, path: '/dashboard/bookings' },
     { label: 'Payments', icon: CreditCard, path: '/dashboard/payments' },
     { label: 'Event Schedule', icon: Calendar, path: '/dashboard/schedule' },
     { label: 'Profile Settings', icon: User, path: '/dashboard/profile' },
-  ];
+  ], []);
 
   const handleLogout = async () => {
+    sessionStorage.removeItem('userProfile'); // Clear cache on logout
     await supabase.auth.signOut();
     navigate('/');
   };

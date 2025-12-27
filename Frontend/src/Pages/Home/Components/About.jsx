@@ -92,11 +92,11 @@ function About() {
       <div className="my-10 sm:my-20 md:my-28">
         <div className="flex flex-col md:hidden mx-4 sm:mx-8 md:mx-16 lg:mx-28 mt-6 sm:mt-12 md:mt-16 justify-center items-center gap-4 sm:gap-8 md:gap-12">
           <div
-            className="w-full border-2 border-primary-dark p-2 sm:p-3 md:p-4 h-full"
+            className="w-full border-2 border-primary-dark p-4 sm:p-5 md:p-6 h-full"
             data-aos="fade-right"
           >
             <img
-              className="w-full md:w-1/2 max-w-[500px]"
+              className="w-full md:w-2/3 max-w-[600px] mx-auto"
               src={logo}
               alt="Dakshaa T26 Logo"
               data-aos="fade-left"
@@ -156,7 +156,7 @@ function About() {
             </div>
           </div>
           <img
-            className="w-2/5"
+            className="w-1/2"
             src={logo}
             alt="Dakshaa T26 Logo"
             data-aos="fade-left"
@@ -167,11 +167,11 @@ function About() {
         <div className="my-10 sm:my-20 md:my-28">
           <div className="flex flex-col md:hidden mx-4 sm:mx-8 md:mx-16 lg:mx-28 mt-6 sm:mt-12 md:mt-16 justify-center items-center gap-4 sm:gap-8 md:gap-12">
             <div
-              className="w-full border-2 border-primary-dark p-2 sm:p-3 md:p-4 h-full"
+              className="w-full border-2 border-primary-dark p-4 sm:p-5 md:p-6 h-full"
               data-aos="fade-right"
             >
               <img
-                className="w-full md:w-1/2 max-w-[500px] bg-white p-2"
+                className="w-full md:w-2/3 max-w-[600px] mx-auto bg-white p-4"
                 src={startupLogo}
                 alt="Startup TN Logo"
                 data-aos="fade-left"
@@ -202,7 +202,7 @@ function About() {
         {/* Desktop View for TN Startup */}
         <div className="hidden md:flex flex-row-reverse mx-28 mt-16 justify-center items-center gap-12">
           <img
-            className="w-2/5 bg-white p-2"
+            className="w-1/2 bg-white p-4"
             src={startupLogo}
             alt="Startup TN Logo"
             data-aos="fade-left"

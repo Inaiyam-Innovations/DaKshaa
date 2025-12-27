@@ -27,17 +27,13 @@ const DashboardHome = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        // Fetch Profile
-        const { data: profileData } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', user.id)
-          .single();
+        // Fetch profile and registrations in parallel for faster load
+        const [profileResponse, regData] = await Promise.all([
+          supabase.from('profiles').select('full_name, email, college_name, role').eq('id', user.id).single(),
+          supabaseService.getUserRegistrations(user.id)
+        ]);
         
-        setProfile(profileData);
-
-        // Fetch Registrations
-        const regData = await supabaseService.getUserRegistrations(user.id);
+        setProfile(profileResponse.data);
         setRegistrations(regData);
       }
     } catch (error) {
@@ -210,7 +206,7 @@ const DashboardHome = () => {
                 <span className="px-3 py-1 rounded-full bg-secondary text-[10px] font-bold uppercase tracking-widest">Technical</span>
                 <span className="text-xs text-gray-400">Today, 10:30 AM</span>
               </div>
-              <h3 className="text-xl font-bold mb-4 group-hover:text-secondary transition-colors">Web-O-Thon 2025</h3>
+              <h3 className="text-xl font-bold mb-4 group-hover:text-secondary transition-colors">Web-O-Thon 2026</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-sm text-gray-400">
                   <MapPin size={16} className="text-secondary" />
@@ -235,3 +231,4 @@ const DashboardHome = () => {
 };
 
 export default DashboardHome;
+

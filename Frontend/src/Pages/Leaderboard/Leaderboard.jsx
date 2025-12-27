@@ -109,7 +109,7 @@ const Leaderboard = () => {
               </h1>
             </div>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Top ambassadors spreading the word about DaKshaa 2025
+              Top ambassadors spreading the word about DaKshaa 2026
             </p>
           </motion.div>
 
@@ -243,3 +243,4 @@ const Leaderboard = () => {
 };
 
 export default Leaderboard;
+

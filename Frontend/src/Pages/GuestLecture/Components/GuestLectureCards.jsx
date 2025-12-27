@@ -65,7 +65,7 @@ const GuestLectureCard = ({ name, title, image, time, date, location }) => {
               )}
 
               {name ===
-                "National Conference on Advancements in Semiconductor Technologies, Intelligent systems and Power Engineering (ASTIPE 2025)" && (
+                "National Conference on Advancements in Semiconductor Technologies, Intelligent systems and Power Engineering (ASTIPE 2026)" && (
                 <>
                   <li>Renewable Energy Systems and Sustainability</li>
                   <li>Advanced Power Electronics and Drives</li>
@@ -118,3 +118,4 @@ const GuestLectureCard = ({ name, title, image, time, date, location }) => {
 };
 
 export default GuestLectureCard;
+

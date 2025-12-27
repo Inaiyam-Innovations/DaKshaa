@@ -158,7 +158,7 @@ const LiveStatusBoard = () => {
           className="text-center mb-12"
         >
           <h1 className="text-6xl font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
-            DaKshaa 2025 • Live Status
+            DaKshaa 2026 • Live Status
           </h1>
           <p className="text-2xl text-gray-400 font-mono">
             {currentTime.toLocaleDateString("en-IN", {
@@ -331,3 +331,4 @@ const LiveStatusBoard = () => {
 };
 
 export default LiveStatusBoard;
+
