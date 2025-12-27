@@ -1,0 +1,141 @@
+# Email Setup Guide for DaKshaa Registration
+
+## ✅ What Has Been Done
+
+1. **Installed nodemailer** package for sending emails
+2. **Created emailService.js** with welcome email template
+3. **Added email endpoint** to server.js (`/send-welcome-email`)
+4. **Updated SignUpForm.jsx** to call email API after successful registration
+5. **Added email configuration** to .env file
+
+## 🔧 What You Need to Do
+
+### Step 1: Set Up Gmail App Password
+
+1. **Go to your Gmail account**: https://myaccount.google.com/
+2. **Enable 2-Factor Authentication** (required for app passwords)
+3. **Generate App Password**:
+   - Go to: https://myaccount.google.com/apppasswords
+   - Select "Mail" and your device
+   - Click "Generate"
+   - Copy the 16-character password
+
+### Step 2: Update .env File
+
+Open `Backend/.env` and replace these values:
+
+```env
+EMAIL_USER=your-actual-email@gmail.com
+EMAIL_PASSWORD=your-16-character-app-password
+```
+
+**Example:**
+```env
+EMAIL_USER=dakshaa2025@gmail.com
+EMAIL_PASSWORD=abcd efgh ijkl mnop
+```
+
+### Step 3: Restart Backend Server
+
+```powershell
+cd Backend
+npm start
+```
+
+### Step 4: Test Registration
+
+1. Go to signup page
+2. Fill in the registration form
+3. Submit the form
+4. User should receive a welcome email within seconds
+
+## 📧 Email Features
+
+The welcome email includes:
+- ✅ Professional HTML design with gradient colors
+- 🎨 DaKshaa branding (blue and orange theme)
+- 📋 User registration details
+- 🎯 Event highlights (3 days, 20+ workshops, 25+ events)
+- 🔗 Call-to-action button
+- 📱 Social media links
+- 💡 Contact information
+
+## 🔄 Email Flow
+
+```
+User Signs Up
+    ↓
+Supabase Creates Account
+    ↓
+Backend Sends Welcome Email
+    ↓
+User Receives Email
+```
+
+## ⚠️ Troubleshooting
+
+### Email Not Sending?
+
+1. **Check .env credentials**
+   - Make sure EMAIL_USER is correct
+   - Make sure EMAIL_PASSWORD is the App Password (not your regular password)
+
+2. **Check console logs**
+   - Backend console will show "Welcome email sent: <messageId>"
+   - Or error message if failed
+
+3. **Check spam folder**
+   - First emails might go to spam
+
+4. **Gmail Security**
+   - Make sure "Less secure app access" is OFF (use App Password instead)
+   - Make sure 2FA is enabled
+
+### Common Errors:
+
+**Error: Invalid login**
+- Solution: Generate new App Password
+
+**Error: Connection timeout**
+- Solution: Check internet connection
+
+**Error: Daily sending quota exceeded**
+- Solution: Wait 24 hours (Gmail free limit: 500 emails/day)
+
+## 🎨 Customize Email Template
+
+To customize the welcome email, edit `Backend/emailService.js`:
+
+```javascript
+const getWelcomeEmailTemplate = (userName, userEmail) => {
+  // Modify HTML template here
+  // Change colors, text, links, etc.
+}
+```
+
+## 📊 Email Statistics
+
+Gmail free account limits:
+- **500 emails per day**
+- **99 recipients per email**
+- Perfect for DaKshaa registration needs
+
+## 🚀 Going Live
+
+For production:
+1. Use a dedicated email service (SendGrid, AWS SES, Mailgun)
+2. Set up proper DNS records (SPF, DKIM)
+3. Use environment variables on hosting platform
+4. Monitor email delivery rates
+
+## 📝 Next Steps (Optional Enhancements)
+
+1. **Email verification** - Require users to verify email before login
+2. **Event registration emails** - Send confirmation when registering for events
+3. **Password reset emails** - Allow users to reset password via email
+4. **Event reminders** - Send reminders before events start
+5. **Certificates** - Email certificates after event completion
+
+---
+
+**Need Help?** Check the console logs or contact support.
