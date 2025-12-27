@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid"); // Import UUID generator
-const pool = require("./db"); // Import DB connection
+const supabase = require("./db"); // Import Supabase connection
 const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,25 +12,8 @@ app.use(cors());
 // Middleware for JSON parsing
 app.use(express.json());
 
-// Initialize Database Tables
-const initDB = async () => {
-  try {
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS feedback_details (
-        feedback_id UUID PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
-        email_id VARCHAR(255) NOT NULL,
-        rating INTEGER NOT NULL,
-        message TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT NOW()
-      )
-    `);
-    console.log("✅ Database tables initialized");
-  } catch (error) {
-    console.error("❌ Error initializing database tables:", error);
-  }
-};
-initDB();
+// No need for initDB with Supabase - tables are managed in Supabase dashboard
+console.log("✅ Backend connected to Supabase");
 
 /* 🟢 Route to Insert Data into accommodation_details */
 app.post("/add-accommodation", async (req, res) => {
@@ -45,16 +28,25 @@ app.post("/add-accommodation", async (req, res) => {
     // 🏷️ Calculate price: ₹300 per day
     const accommodation_price = accommodation_dates.length * 300;
 
-    // Insert query
-    const result = await pool.query(
-      `INSERT INTO accommodation_details (username, accommodation_dates, gender, accommodation_price, email_id, mobile_number, college_name) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-      [username, accommodation_dates, gender, accommodation_price, email_id, mobile_number, college_name]
-    );
+    // Insert using Supabase
+    const { data, error } = await supabase
+      .from('accommodation_details')
+      .insert([{
+        username,
+        accommodation_dates,
+        gender,
+        accommodation_price,
+        email_id,
+        mobile_number,
+        college_name
+      }])
+      .select();
+
+    if (error) throw error;
 
     res.status(201).json({
       message: "Accommodation added successfully!",
-      data: result.rows[0],
+      data: data[0],
     });
   } catch (error) {
     console.error("❌ Error inserting data:", error);
@@ -65,13 +57,15 @@ app.post("/add-accommodation", async (req, res) => {
 /* 🟢 Route to Fetch All Accommodation Details */
 app.get("/accommodations", async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT username, email_id, mobile_number, gender, accommodation_dates, accommodation_price FROM accommodation_details`
-    );
+    const { data, error } = await supabase
+      .from('accommodation_details')
+      .select('username, email_id, mobile_number, gender, accommodation_dates, accommodation_price');
+
+    if (error) throw error;
 
     res.status(200).json({
       message: "Fetched accommodation details successfully!",
-      data: result.rows,
+      data: data,
     });
   } catch (error) {
     console.error("❌ Error fetching data:", error);
@@ -92,16 +86,23 @@ app.post("/add-contact", async (req, res) => {
     // Generate UUID for user_id
     const user_id = uuidv4();
 
-    // Insert query
-    const result = await pool.query(
-      `INSERT INTO contact_details (user_id, username, email_id, mobile_number, message, created_at) 
-       VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *`,
-      [user_id, username, email_id, mobile_number, message]
-    );
+    // Insert using Supabase
+    const { data, error } = await supabase
+      .from('contact_details')
+      .insert([{
+        user_id,
+        username,
+        email_id,
+        mobile_number,
+        message
+      }])
+      .select();
+
+    if (error) throw error;
 
     res.status(201).json({
       message: "Contact details added successfully!",
-      data: result.rows[0],
+      data: data[0],
     });
   } catch (error) {
     console.error("❌ Error inserting contact details:", error);
@@ -111,13 +112,15 @@ app.post("/add-contact", async (req, res) => {
 
 app.get("/contacts", async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT username, email_id, mobile_number, message FROM contact_details`
-    );
+    const { data, error } = await supabase
+      .from('contact_details')
+      .select('username, email_id, mobile_number, message');
+
+    if (error) throw error;
 
     res.status(200).json({
       message: "Fetched contact details successfully!",
-      data: result.rows,
+      data: data,
     });
   } catch (error) {
     console.error("❌ Error fetching contact details:", error);
@@ -138,16 +141,23 @@ app.post("/add-feedback", async (req, res) => {
     // Generate UUID for feedback_id
     const feedback_id = uuidv4();
 
-    // Insert query
-    const result = await pool.query(
-      `INSERT INTO feedback_details (feedback_id, username, email_id, rating, message, created_at) 
-       VALUES ($1, $2, $3, $4, $5, NOW()) RETURNING *`,
-      [feedback_id, username, email_id, rating, message]
-    );
+    // Insert using Supabase
+    const { data, error } = await supabase
+      .from('feedback_details')
+      .insert([{
+        feedback_id,
+        username,
+        email_id,
+        rating,
+        message
+      }])
+      .select();
+
+    if (error) throw error;
 
     res.status(201).json({
       message: "Feedback submitted successfully!",
-      data: result.rows[0],
+      data: data[0],
     });
   } catch (error) {
     console.error("❌ Error inserting feedback:", error);
@@ -158,13 +168,16 @@ app.post("/add-feedback", async (req, res) => {
 /* 🟢 Route to Fetch All Feedback Details */
 app.get("/feedbacks", async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT username, email_id, rating, message, created_at FROM feedback_details ORDER BY created_at DESC`
-    );
+    const { data, error } = await supabase
+      .from('feedback_details')
+      .select('username, email_id, rating, message, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
 
     res.status(200).json({
       message: "Fetched feedback details successfully!",
-      data: result.rows,
+      data: data,
     });
   } catch (error) {
     console.error("❌ Error fetching feedback:", error);

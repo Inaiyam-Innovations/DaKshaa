@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { QrReader } from 'react-qr-reader';
+import React, { useState, useEffect, useRef } from 'react';
+import { Html5QrcodeScanner } from 'html5-qrcode';
 import { supabase } from '../../supabase';
 import { CheckCircle, XCircle, Camera, RefreshCw } from 'lucide-react';
 
@@ -8,19 +8,43 @@ const Scan = () => {
   const [status, setStatus] = useState('idle'); // idle, success, error
   const [message, setMessage] = useState('');
   const [scanning, setScanning] = useState(true);
+  const scannerRef = useRef(null);
 
-  const handleResult = async (result, error) => {
-    if (!!result) {
-      const qrString = result?.text;
-      setData(qrString);
-      setScanning(false);
-      validateTicket(qrString);
+  useEffect(() => {
+    if (scanning && !scannerRef.current) {
+      const scanner = new Html5QrcodeScanner(
+        "qr-reader",
+        { 
+          fps: 10,
+          qrbox: { width: 250, height: 250 },
+          aspectRatio: 1.0
+        },
+        false
+      );
+
+      scanner.render(
+        (decodedText) => {
+          setData(decodedText);
+          setScanning(false);
+          validateTicket(decodedText);
+          scanner.clear();
+          scannerRef.current = null;
+        },
+        (error) => {
+          // Silent error handling - QR not detected yet
+        }
+      );
+
+      scannerRef.current = scanner;
     }
 
-    if (!!error) {
-      // console.info(error);
-    }
-  };
+    return () => {
+      if (scannerRef.current) {
+        scannerRef.current.clear().catch(console.error);
+        scannerRef.current = null;
+      }
+    };
+  }, [scanning]);
 
   const validateTicket = async (qrString) => {
     setStatus('loading');
@@ -64,13 +88,9 @@ const Scan = () => {
         <Camera className="text-blue-500" /> Coordinator Scanner
       </h1>
 
-      <div className="w-full max-w-md aspect-square bg-black rounded-2xl overflow-hidden border-4 border-gray-800 relative">
+      <div className="w-full max-w-md bg-black rounded-2xl overflow-hidden border-4 border-gray-800 relative">
         {scanning ? (
-          <QrReader
-            onResult={handleResult}
-            constraints={{ facingMode: 'environment' }}
-            className="w-full h-full"
-          />
+          <div id="qr-reader" className="w-full"></div>
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center">
             {status === 'success' && (
@@ -93,12 +113,6 @@ const Scan = () => {
             >
               <RefreshCw className="w-5 h-5" /> Scan Next
             </button>
-          </div>
-        )}
-        
-        {scanning && (
-          <div className="absolute inset-0 border-2 border-blue-500/50 pointer-events-none animate-pulse">
-            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.8)]" />
           </div>
         )}
       </div>

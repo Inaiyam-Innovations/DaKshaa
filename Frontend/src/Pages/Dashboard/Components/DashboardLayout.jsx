@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -14,11 +14,31 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '../../../supabase';
 
 const DashboardLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
+        
+        setUserProfile(profile);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const menuItems = [
     { label: 'Overview', icon: LayoutDashboard, path: '/dashboard' },
@@ -30,8 +50,8 @@ const DashboardLayout = ({ children }) => {
     { label: 'Profile Settings', icon: User, path: '/dashboard/profile' },
   ];
 
-  const handleLogout = () => {
-    // Add logout logic here
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     navigate('/');
   };
 
@@ -181,12 +201,12 @@ const DashboardLayout = ({ children }) => {
 
             <div className="flex items-center gap-3 pl-6 border-l border-white/10">
               <div className="text-right">
-                <p className="text-sm font-bold">Alex Johnson</p>
-                <p className="text-[10px] text-secondary uppercase font-bold">Platinum Member</p>
+                <p className="text-sm font-bold">{userProfile?.full_name || 'Loading...'}</p>
+                <p className="text-[10px] text-secondary uppercase font-bold">{userProfile?.role || 'Student'}</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-primary p-0.5">
                 <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center overflow-hidden">
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" alt="Avatar" />
+                  <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${userProfile?.full_name || 'User'}`} alt="Avatar" />
                 </div>
               </div>
             </div>

@@ -65,8 +65,8 @@ const SignUpForm = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        alert("Account created successfully! Please check your email for verification.");
-        navigate('/login');
+        alert("Account created successfully! Redirecting to home page...");
+        navigate('/');
       }
     } catch (err) {
       setError(err.message);

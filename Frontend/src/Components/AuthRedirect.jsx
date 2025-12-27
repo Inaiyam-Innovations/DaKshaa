@@ -33,9 +33,9 @@ const AuthRedirect = ({ children }) => {
       } else if (role === 'volunteer') {
         navigate('/volunteer');
       } else {
-        // If on login or home, redirect to events
-        if (window.location.pathname === '/login' || window.location.pathname === '/') {
-          navigate('/events');
+        // If on login page, redirect to home
+        if (window.location.pathname === '/login') {
+          navigate('/');
         }
       }
       setLoading(false);

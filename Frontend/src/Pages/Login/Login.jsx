@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
 import { motion } from 'framer-motion';
 import { LogIn, Mail, Lock, Loader2 } from 'lucide-react';
@@ -10,18 +10,55 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    if (error) setError(error.message);
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    if (data?.user) {
+      // Fetch user role from profiles table
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .single();
+
+      if (profileError) {
+        console.error('Error fetching profile:', profileError);
+        setError('Could not fetch user profile');
+        setLoading(false);
+        return;
+      }
+
+      const role = profile?.role || 'student';
+
+      // Redirect based on role
+      if (role === 'super_admin') {
+        navigate('/admin');
+      } else if (role === 'registration_admin') {
+        navigate('/admin/desk');
+      } else if (role === 'event_coordinator') {
+        navigate('/coordinator');
+      } else if (role === 'volunteer') {
+        navigate('/volunteer');
+      } else {
+        navigate('/');
+      }
+    }
+    
     setLoading(false);
   };
 
