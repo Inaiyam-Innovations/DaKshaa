@@ -19,59 +19,86 @@ console.log("✅ Backend connected to Supabase");
 /* 🟢 Route to Insert Data into accommodation_requests */
 app.post("/add-accommodation", async (req, res) => {
   try {
-    let { username, accommodation_dates, gender, email_id, mobile_number, college_name } = req.body;
+    let { user_id, username, accommodation_dates, gender, email_id, mobile_number, college_name } = req.body;
+
+    // Validate user_id is provided
+    if (!user_id) {
+      return res.status(401).json({ 
+        success: false,
+        error: "User authentication required" 
+      });
+    }
 
     // Ensure accommodation_dates is an array
     if (!Array.isArray(accommodation_dates) || accommodation_dates.length === 0) {
-      return res.status(400).json({ error: "Invalid accommodation_dates. It should be a non-empty array of dates." });
+      return res.status(400).json({ 
+        success: false,
+        error: "Invalid accommodation_dates. It should be a non-empty array of dates." 
+      });
     }
 
-    // Function to convert "March 28" to "2026-03-28" format
-    const convertToDateFormat = (dateString) => {
-      const year = "2026";
-      const month = "03"; // March
-      const day = dateString.split(" ")[1].padStart(2, '0'); // Extract day from "March 28"
-      return `${year}-${month}-${day}`;
-    };
-
-    // Convert dates to proper format
-    const formattedDates = accommodation_dates.map(convertToDateFormat);
-
+    // Determine if March 28 is selected
+    const march_28_accommodation = accommodation_dates.includes('March 28');
+    
     // 🏷️ Calculate price: ₹300 per day
-    const number_of_days = formattedDates.length;
+    const number_of_days = accommodation_dates.length;
     const accommodation_price = number_of_days * 300;
 
-    // Get first and last dates for check-in/check-out
-    const sortedDates = formattedDates.sort();
-    const check_in_date = sortedDates[0];
-    const check_out_date = sortedDates[sortedDates.length - 1];
-
-    // Insert using Supabase with correct schema
-    const { data, error } = await supabase
+    // Check if booking already exists for this user
+    const { data: existingBooking } = await supabase
       .from('accommodation_requests')
-      .insert([{
-        full_name: username,
-        email: email_id,
-        phone: mobile_number,
-        college_name: college_name,
-        check_in_date: check_in_date,
-        check_out_date: check_out_date,
-        number_of_days: number_of_days,
-        include_food: false,
-        total_price: accommodation_price,
-        payment_status: 'PENDING'
-      }])
-      .select();
+      .select('*')
+      .eq('user_id', user_id)
+      .single();
 
-    if (error) throw error;
+    let result;
+    
+    if (existingBooking) {
+      // User already has a booking - don't allow duplicate
+      return res.status(400).json({ 
+        success: false,
+        alreadyBooked: true,
+        message: "You have already booked accommodation"
+      });
+    } else {
+      // Insert new booking
+      const { data, error } = await supabase
+        .from('accommodation_requests')
+        .insert([{
+          user_id: user_id,
+          full_name: username,
+          email: email_id,
+          phone: mobile_number,
+          college_name: college_name,
+          gender: gender,
+          march_28_accommodation,
+          number_of_days,
+          total_price: accommodation_price,
+          payment_status: 'PENDING'
+        }])
+        .select();
+
+      if (error) {
+        console.error("❌ Error inserting data:", error);
+        return res.status(400).json({ 
+          success: false,
+          error: error.message || "Failed to book accommodation" 
+        });
+      }
+      result = data;
+    }
 
     res.status(201).json({
-      message: "Accommodation added successfully!",
-      data: data[0],
+      success: true,
+      message: "Accommodation booked successfully!",
+      data: result[0],
     });
   } catch (error) {
     console.error("❌ Error inserting data:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ 
+      success: false,
+      error: error.message || "Internal Server Error" 
+    });
   }
 });
 
@@ -127,44 +154,77 @@ app.post("/add-lunch-booking", async (req, res) => {
   try {
     const { user_id, full_name, email, mobile, lunch_dates, total_price } = req.body;
 
-    if (!lunch_dates || lunch_dates.length === 0) {
-      return res.status(400).json({ error: "Please select at least one lunch date" });
+    // Validate user_id
+    if (!user_id) {
+      return res.status(401).json({ 
+        success: false,
+        error: "User authentication required" 
+      });
     }
 
-    // Function to convert "March 28" to "2026-03-28" format
-    const convertToDateFormat = (dateString) => {
-      const year = "2026";
-      const month = "03"; // March
-      const day = dateString.split(" ")[1].padStart(2, '0'); // Extract day from "March 28"
-      return `${year}-${month}-${day}`;
-    };
+    if (!lunch_dates || lunch_dates.length === 0) {
+      return res.status(400).json({ 
+        success: false,
+        error: "Please select at least one lunch date" 
+      });
+    }
 
-    // Insert a row for each lunch date
-    const bookingsToInsert = lunch_dates.map(date => ({
-      user_id,
-      full_name,
-      email,
-      phone: mobile,
-      lunch_date: convertToDateFormat(date), // Convert to proper date format
-      quantity: 1,
-      total_price: 100, // Price per lunch
-      payment_status: 'PENDING'
-    }));
+    // Determine which days are selected
+    const march_28_lunch = lunch_dates.includes('March 28');
+    const march_29_lunch = lunch_dates.includes('March 29');
+    
+    // Calculate totals
+    const total_lunches = lunch_dates.length;
+    const calculated_price = total_lunches * 100;
 
-    const { data, error } = await supabase
+    // Check if booking already exists for this user
+    const { data: existingBooking } = await supabase
       .from('lunch_bookings')
-      .insert(bookingsToInsert)
-      .select();
+      .select('*')
+      .eq('user_id', user_id)
+      .single();
 
-    if (error) throw error;
+    let result;
+    
+    if (existingBooking) {
+      // User already has a booking - don't allow duplicate
+      return res.status(400).json({ 
+        success: false,
+        alreadyBooked: true,
+        message: "You have already booked lunch"
+      });
+    } else {
+      // Insert new booking
+      const { data, error } = await supabase
+        .from('lunch_bookings')
+        .insert([{
+          user_id,
+          full_name,
+          email,
+          phone: mobile,
+          march_28_lunch,
+          march_29_lunch,
+          total_lunches,
+          total_price: calculated_price,
+          payment_status: 'PENDING'
+        }])
+        .select();
+      
+      if (error) throw error;
+      result = data;
+    }
 
     res.status(201).json({
-      message: "Lunch booking created successfully!",
-      data: data
+      success: true,
+      message: "Lunch booked successfully!",
+      data: result[0]
     });
   } catch (error) {
     console.error("Error adding lunch booking:", error);
-    res.status(500).json({ error: "Failed to add lunch booking" });
+    res.status(500).json({ 
+      success: false,
+      error: error.message || "Failed to add lunch booking" 
+    });
   }
 });
 

@@ -89,13 +89,21 @@ const AccommodationBooking = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        toast.error('Please login to book');
+        toast.error('Please login to book', {
+          icon: '🔒',
+          duration: 3000,
+        });
+        setLoading(false);
         return;
       }
 
       if (bookingType === 'accommodation') {
         if (formData.accommodationDates.length === 0) {
-          toast.error('Please select at least one date');
+          toast.error('Please select at least one date', {
+            icon: '📅',
+            duration: 3000,
+          });
+          setLoading(false);
           return;
         }
 
@@ -104,6 +112,7 @@ const AccommodationBooking = () => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            user_id: user.id,
             username: formData.fullName,
             accommodation_dates: formData.accommodationDates,
             gender: formData.gender,
@@ -113,16 +122,43 @@ const AccommodationBooking = () => {
           })
         });
 
-        if (response.ok) {
+        const result = await response.json();
+
+        if (response.ok && result.success) {
           toast.success('Accommodation booked successfully! 🏨', {
             duration: 4000,
             icon: '✅',
+            style: {
+              background: '#10b981',
+              color: '#fff',
+            },
+          });
+          // Reset form
+          setFormData({
+            ...formData,
+            accommodationDates: []
           });
           setShowModal(false);
+        } else if (result.alreadyBooked) {
+          toast.error('You have already booked accommodation!', {
+            icon: '⚠️',
+            duration: 4000,
+            style: {
+              background: '#f59e0b',
+              color: '#fff',
+            },
+          });
+          setShowModal(false);
+        } else {
+          throw new Error('Booking failed');
         }
       } else {
         if (formData.lunchDates.length === 0) {
-          toast.error('Please select at least one lunch date');
+          toast.error('Please select at least one lunch date', {
+            icon: '📅',
+            duration: 3000,
+          });
+          setLoading(false);
           return;
         }
 
@@ -140,19 +176,48 @@ const AccommodationBooking = () => {
           })
         });
 
-        if (response.ok) {
+        const result = await response.json();
+
+        if (response.ok && result.success) {
           toast.success('Lunch reserved successfully! 🍽️', {
             duration: 4000,
             icon: '✅',
+            style: {
+              background: '#f97316',
+              color: '#fff',
+            },
+          });
+          // Reset form
+          setFormData({
+            ...formData,
+            lunchDates: []
+          });
+          setShowModal(false);
+        } else if (result.alreadyBooked) {
+          toast.error('You have already booked lunch!', {
+            icon: '⚠️',
+            duration: 4000,
+            style: {
+              background: '#f59e0b',
+              color: '#fff',
+            },
           });
           setShowModal(false);
         } else {
-          throw new Error('Failed to reserve lunch');
+          throw new Error('Booking failed');
         }
       }
     } catch (error) {
       console.error('Booking error:', error);
-      toast.error('Booking failed. Please try again.');
+      
+      toast.error('Booking failed. Please try again.', {
+        icon: '❌',
+        duration: 5000,
+        style: {
+          background: '#ef4444',
+          color: '#fff',
+        },
+      });
     } finally {
       setLoading(false);
     }
